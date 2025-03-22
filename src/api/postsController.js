@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { createPost } = require('../services');
+const { createPost, getOnePost } = require('../services');
 const { logger } = require('../utils');
 
 router.post('/create', async (req, res) => {
@@ -20,6 +20,27 @@ router.post('/create', async (req, res) => {
         res.status(400).send({
             hasError: true,
             message: 'An error occured when trying to create a new post',
+        });
+    }
+});
+
+router.get('/getOne/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const getOneResult = await getOnePost(id);
+
+        res.status(200).send({
+            hasError: false,
+            message: 'Successfully retrieved the data from the post',
+            data: getOneResult,
+        });
+    } catch (err) {
+        logger.error(err);
+        res.status(400).send({
+            hasError: true,
+            message:
+                'An error occured when trying to retrieve data from the post',
         });
     }
 });
