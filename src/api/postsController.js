@@ -69,6 +69,24 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/last5', async (req, res) => {
+    try {
+        const getResult = await getPosts(true);
+
+        res.status(200).send({
+            hasError: false,
+            message: 'Successfully pulled all posts',
+            data: getResult,
+        });
+    } catch (err) {
+        logger.error(err);
+        res.status(400).send({
+            hasError: true,
+            message: 'An error occured when trying to pull all posts',
+        });
+    }
+});
+
 router.put('/edit/:id', async (req, res) => {
     try {
         const editData = { ...req.body, id: req.params.id };
