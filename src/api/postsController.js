@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { createPost, getOnePost, getPosts } = require('../services');
+const { createPost, getOnePost, getPosts, editPost } = require('../services');
 const { logger } = require('../utils');
 
 router.post('/create', async (req, res) => {
@@ -63,4 +63,23 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.put('/edit/:id', async (req, res) => {
+    try {
+        const editData = { ...req.body, id: req.params.id };
+
+        const editResult = await editPost(editData);
+
+        res.status(200).send({
+            hasError: false,
+            message: 'Successfully edited the post',
+            data: editResult,
+        });
+    } catch (err) {
+        logger.error(err);
+        res.status(400).send({
+            hasError: true,
+            message: 'An error occured when trying to edit the post',
+        });
+    }
+});
 module.exports = router;
