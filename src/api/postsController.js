@@ -1,7 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
-const { createPost, getOnePost, getPosts, editPost } = require('../services');
+const {
+    createPost,
+    getOnePost,
+    getPosts,
+    editPost,
+    deletePost,
+} = require('../services');
 const { logger } = require('../utils');
 
 router.post('/create', async (req, res) => {
@@ -79,6 +85,26 @@ router.put('/edit/:id', async (req, res) => {
         res.status(400).send({
             hasError: true,
             message: 'An error occured when trying to edit the post',
+        });
+    }
+});
+
+router.delete('/delete/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const deleteResult = await deletePost(id);
+
+        res.status(200).send({
+            hasError: false,
+            message: 'Successfully deleted the post',
+            data: deleteResult,
+        });
+    } catch (err) {
+        logger.error(err);
+        res.status(400).send({
+            hasError: true,
+            message: 'An error occured when trying to delete the post',
         });
     }
 });
