@@ -1,6 +1,7 @@
+const { Op } = require('sequelize');
+
 const { logger } = require('../utils');
 const { PostModel } = require('../models');
-const { Op } = require('sequelize');
 
 const getPosts = (filterLast) => {
     logger.info('Pulling all Posts');
