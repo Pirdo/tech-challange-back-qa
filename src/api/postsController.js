@@ -7,6 +7,7 @@ const {
     getPosts,
     editPost,
     deletePost,
+    searchPost,
 } = require('../services');
 const { logger } = require('../utils');
 
@@ -126,4 +127,27 @@ router.delete('/delete/:id', async (req, res) => {
         });
     }
 });
+
+router.get('/search', async (req, res) => {
+    try {
+        const { keyword } = req.query;
+
+        const keywords = keyword.split(' ').map((k) => k.trim());
+
+        const searchResult = await searchPost(keywords);
+
+        res.status(200).send({
+            hasError: false,
+            message: 'Successfully searched for the posts',
+            data: searchResult,
+        });
+    } catch (err) {
+        logger.error(err);
+        res.status(400).send({
+            hasError: true,
+            message: 'An error occured when trying to search for the posts',
+        });
+    }
+});
+
 module.exports = router;
