@@ -1,19 +1,20 @@
 require('dotenv').config();
 
 const app = require('./server');
-// const sequelize = require('./src/config/postgres');
+const { postgresConn } = require('./config');
 const port = process.env.PORT || 3000;
 
 const { logger } = require('./utils');
 
 app.listen(port, () => {
-    logger.info(`Application running on port ${port}`);
-    // sequelize
-    //     .authenticate()
-    //     .then(() => {
-    //         logger.info(`Application running on port ${port}`);
-    //     })
-    //     .catch((err) => {
-    //         logger.error(err);
-    //     });
+    postgresConn
+        .authenticate()
+        .then(() => {
+            logger.info('Connected to database');
+            logger.info(`Application running on port ${port}`);
+        })
+        .catch((err) => {
+            logger.error('There was an error while connecting to the database');
+            logger.error(err);
+        });
 });
