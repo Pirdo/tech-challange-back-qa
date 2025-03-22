@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { createPost, getOnePost } = require('../services');
+const { createPost, getOnePost, getPosts } = require('../services');
 const { logger } = require('../utils');
 
 router.post('/create', async (req, res) => {
@@ -41,6 +41,24 @@ router.get('/getOne/:id', async (req, res) => {
             hasError: true,
             message:
                 'An error occured when trying to retrieve data from the post',
+        });
+    }
+});
+
+router.get('/', async (req, res) => {
+    try {
+        const getResult = await getPosts();
+
+        res.status(200).send({
+            hasError: false,
+            message: 'Successfully pulled all posts',
+            data: getResult,
+        });
+    } catch (err) {
+        logger.error(err);
+        res.status(400).send({
+            hasError: true,
+            message: 'An error occured when trying to pull all posts',
         });
     }
 });
