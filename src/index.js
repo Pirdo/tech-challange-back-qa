@@ -8,7 +8,7 @@ const { logger } = require('./utils');
 
 app.listen(port, () => {
     postgresConn
-        .authenticate()
+        .sync()
         .then(() => {
             logger.info('Connected to database');
             logger.info(`Application running on port ${port}`);
