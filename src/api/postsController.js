@@ -76,14 +76,14 @@ router.get('/last5', async (req, res) => {
 
         res.status(200).send({
             hasError: false,
-            message: 'Successfully pulled all posts',
+            message: 'Successfully pulled the last 5 posts',
             data: getResult,
         });
     } catch (err) {
         logger.error(err);
         res.status(400).send({
             hasError: true,
-            message: 'An error occured when trying to pull all posts',
+            message: 'An error occured when trying to pull the last 5 posts',
         });
     }
 });
