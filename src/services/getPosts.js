@@ -5,7 +5,6 @@ const { PostModel } = require('../models');
 
 const getPosts = (filterLast) => {
     logger.info('Pulling all Posts');
-    console.log(new Date().getDate() - 5);
     return PostModel.findAll(
         filterLast
             ? {

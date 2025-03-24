@@ -1,6 +1,8 @@
 const express = require('express');
-const { postsRoutes } = require('./api');
+require('dotenv').config();
 const helmet = require('helmet');
+
+const { postsRoutes } = require('./api');
 
 const app = express();
 
