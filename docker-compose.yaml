@@ -1,0 +1,33 @@
+services:
+    db:
+        image: postgres:15
+        container_name: back-qa-database-compose
+        restart: unless-stopped
+        environment:
+            POSTGRES_USER: tech_challenge
+            POSTGRES_PASSWORD: pass_tech
+            POSTGRES_DB: challenge_back_qa
+        ports:
+            - '5432:5432'
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+
+    app:
+        build: .
+        container_name: tech-challenge-back-qa-compose
+        depends_on:
+            - db
+        environment:
+            - POSTGRE_HOST=db
+            - POSTGRE_PORT=5432
+            - POSTGRE_DATABASE=challenge_back_qa
+            - POSTGRE_USERNAME=tech_challenge
+            - POSTGRE_PASSWORD=pass_tech
+        ports:
+            - '3000:3000'
+        volumes:
+            - .:/usr/src/app
+        command: ['npm', 'start']
+
+volumes:
+    pgdata:
