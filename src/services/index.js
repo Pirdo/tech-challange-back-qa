@@ -4,6 +4,8 @@ const getPosts = require('./getPosts');
 const editPost = require('./editPost');
 const deletePost = require('./deletePost');
 const searchPost = require('./searchPost');
+const loginUser = require('./loginUser');
+const registerUser = require('./registerUser');
 
 module.exports = {
     createPost,
@@ -12,4 +14,6 @@ module.exports = {
     editPost,
     deletePost,
     searchPost,
+    loginUser,
+    registerUser,
 };
