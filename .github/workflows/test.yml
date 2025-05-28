@@ -26,4 +26,4 @@ jobs:
               run: sleep 10
 
             - name: Run tests inside app container
-              run: docker-compose exec app npm test
+              run: docker-compose exec -T app npm test
