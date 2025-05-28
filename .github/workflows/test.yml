@@ -9,7 +9,7 @@ jobs:
             - uses: actions/checkout@v2
 
             - name: Execute tests
-              run: docker compose app server npm run test
+              run: docker compose run app server npm run test
             # - name: Install modules
             #   run: npm install
 
