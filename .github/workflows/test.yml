@@ -1,17 +1,29 @@
-name: Tests
+name: Run Node.js Tests with Docker Compose
 
-on: push
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
 
 jobs:
-    build:
+    test:
         runs-on: ubuntu-latest
+
         steps:
-            - uses: actions/checkout@v2
+            - name: Checkout code
+              uses: actions/checkout@v4
 
-            - name: Execute tests
-              run: docker compose run app npm run test
-            # - name: Install modules
-            #   run: npm install
+            - name: Set up Docker Compose
+              run: |
+                  sudo apt-get update
+                  sudo apt-get install -y docker-compose
 
-            # - name: Run tests
-            #   run: npm run test
+            - name: Build and start services
+              run: docker-compose up -d --build
+
+            - name: Wait for services to be ready
+              run: sleep 10
+
+            - name: Run tests inside app container
+              run: docker-compose exec app npm test
