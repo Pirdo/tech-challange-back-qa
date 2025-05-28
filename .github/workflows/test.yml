@@ -8,13 +8,8 @@ jobs:
         steps:
             - uses: actions/checkout@v2
 
-            # - name: Run docker compose
-            #   uses: hoverkraft-tech/compose-action@v2.0.1
-            #   with:
-            #       compose-file: './docker-compose.yml'
-
             - name: Execute tests
-              run: docker compose run server npm run test
+              run: docker compose app server npm run test
             # - name: Install modules
             #   run: npm install
 
