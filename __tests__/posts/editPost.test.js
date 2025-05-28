@@ -7,12 +7,13 @@ const { PostModel } = require('../../src/models');
 describe('PUT /posts/edit', () => {
     beforeAll(async () => {
         await postgresConn.sync();
-        await PostModel.create({
-            id: 999999,
-            titulo: 'titulo de unit test',
-            conteudo: 'post criado para unit test',
-            autor: 'Unit Test',
-        });
+        if (!PostModel.findByPk(99999))
+            await PostModel.create({
+                id: 999999,
+                titulo: 'titulo de unit test',
+                conteudo: 'post criado para unit test',
+                autor: 'Unit Test',
+            });
     });
 
     it('should return status 200 with the data from all posts and a message aswell', async () => {
